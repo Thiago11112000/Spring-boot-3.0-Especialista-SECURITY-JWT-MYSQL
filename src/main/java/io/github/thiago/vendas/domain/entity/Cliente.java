@@ -1,6 +1,16 @@
 package io.github.thiago.vendas.domain.entity;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "cliente")
 public class Cliente {
+    @Id
+    @GeneratedValue(strategy =  GenerationType.AUTO)
+    private Integer id;
+
+    @Column(name ="nome", length = 100)
+    private String nome;
 
     public Cliente() {
     }
@@ -14,8 +24,7 @@ public class Cliente {
         this.nome = nome;
     }
 
-    private Integer id;
-    private String nome;
+
 
     public Integer getId() {
         return id;
