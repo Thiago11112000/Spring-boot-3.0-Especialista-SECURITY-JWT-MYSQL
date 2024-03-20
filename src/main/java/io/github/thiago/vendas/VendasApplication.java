@@ -16,48 +16,17 @@ public class VendasApplication {
 
     @Bean
     public CommandLineRunner  init (@Autowired Clientes clientes){
-    return args -> {
-        System.out.println("Salvando Clientes");
-        Cliente cliente = new Cliente();
-        cliente.setNome("Douglas");
-        clientes.save(cliente);
+        return args -> {
+            System.out.println("Salvando clientes");
+            clientes.save(new Cliente("Douglas"));
+            clientes.save(new Cliente("Outro Cliente"));
 
-        Cliente cliente2= new Cliente("Outro cliente");
-        clientes.save(cliente2);
+         boolean existe  =  clientes.existsByNome("Douglas");
+         System.out.println("Existe um Douglas  ? " + existe);
 
-        clientes.save(new Cliente("Terceiro cliente"));
 
-        List<Cliente> todosClientes  = clientes.findAll();
-        todosClientes.forEach(System.out::println );
-
-        System.out.print("Método booleano: ");
-       boolean existe =  clientes.existsByNome("Douglas");
-       System.out.println(existe);
-
-        System.out.println("Editando Clientes");
-        todosClientes.forEach(c -> {
-            c.setNome(c.getNome() + " atualizado");
-            clientes.save(c);
-        });
-
-        todosClientes  = clientes.findAll();
-        todosClientes.forEach(System.out::println );
-        System.out.println("Buscando Clientes");
-        clientes.findByNomeLike("%cli%").forEach(System.out::println);
-
-        System.out.println("Deletando Clientes");
-        clientes.findAll().forEach(c -> {
-            clientes.delete(c);
-        });
-
-        todosClientes = clientes.findAll();
-        if (todosClientes.isEmpty()) {
-            System.out.println("Nenhum Cliente encontrado");
-        } else
-            todosClientes.forEach(System.out::println);
-    };
+        };
     }
-
 
     public static void main(String[] args) {
         SpringApplication.run(VendasApplication.class, args);
