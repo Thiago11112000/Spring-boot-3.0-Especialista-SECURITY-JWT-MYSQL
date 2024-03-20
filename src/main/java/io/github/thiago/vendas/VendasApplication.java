@@ -22,13 +22,17 @@ public class VendasApplication {
         cliente.setNome("Douglas");
         clientes.save(cliente);
 
-        Cliente cliente2= new Cliente("Outro Cliente");
+        Cliente cliente2= new Cliente("Outro cliente");
         clientes.save(cliente2);
 
         clientes.save(new Cliente("Terceiro cliente"));
 
         List<Cliente> todosClientes  = clientes.findAll();
         todosClientes.forEach(System.out::println );
+
+        System.out.print("Método booleano: ");
+       boolean existe =  clientes.existsByNome("Douglas");
+       System.out.println(existe);
 
         System.out.println("Editando Clientes");
         todosClientes.forEach(c -> {
@@ -39,7 +43,7 @@ public class VendasApplication {
         todosClientes  = clientes.findAll();
         todosClientes.forEach(System.out::println );
         System.out.println("Buscando Clientes");
-        clientes.findByNomeLike("Cli").forEach(System.out::println);
+        clientes.findByNomeLike("%cli%").forEach(System.out::println);
 
         System.out.println("Deletando Clientes");
         clientes.findAll().forEach(c -> {
