@@ -1,12 +1,16 @@
 package io.github.thiago.vendas;
 import io.github.thiago.vendas.domain.entity.Cliente;
+import io.github.thiago.vendas.domain.entity.Pedido;
 import io.github.thiago.vendas.domain.repository.Clientes;
+import io.github.thiago.vendas.domain.repository.Pedidos;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -15,14 +19,26 @@ public class VendasApplication {
 
 
     @Bean
-    public CommandLineRunner  init (@Autowired Clientes clientes){
+    public CommandLineRunner  init(
+        @Autowired Clientes clientes,
+        @Autowired Pedidos  pedidos){
         return args -> {
             System.out.println("Salvando clientes");
-            clientes.save(new Cliente("Douglas"));
-            clientes.save(new Cliente("Outro Cliente"));
+            Cliente  fulano  = new Cliente("Fulano");
+            clientes.save(fulano);
 
-          List<Cliente> result  =  clientes.encontrarPorNome("Douglas");
-          result.forEach(System.out::println);
+            Pedido  p = new Pedido();
+            p.setCliente(fulano);
+            p.setDataPedido(LocalDate.now());
+            p.setTotal(BigDecimal.valueOf(100));
+
+            pedidos.save(p);
+
+//       Cliente cliente = clientes.findClienteFetchPedidos(fulano.getId());
+//       System.out.println(cliente);
+//       System.out.println(cliente.getPedidos());
+
+           pedidos.findByCliente(fulano).forEach(System.out::println);
 
 
         };
