@@ -1,4 +1,4 @@
-package io.github.thiago.vendas.domain.repositorio;
+package io.github.thiago.vendas.domain.repository;
 
 
 import io.github.thiago.vendas.domain.entity.Cliente;

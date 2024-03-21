@@ -1,6 +1,6 @@
 package io.github.thiago.vendas;
 import io.github.thiago.vendas.domain.entity.Cliente;
-import io.github.thiago.vendas.domain.repositorio.Clientes;
+import io.github.thiago.vendas.domain.repository.Clientes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
