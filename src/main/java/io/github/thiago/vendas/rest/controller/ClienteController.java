@@ -1,19 +1,25 @@
 package io.github.thiago.vendas.rest.controller;
 
 
+import io.github.thiago.vendas.domain.entity.Cliente;
+import io.github.thiago.vendas.domain.repository.Clientes;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/api/clientes")
+@RequestMapping(
+   value =  {"/api/clientes",  "/api/hello"},
+        method = RequestMethod.GET,
+        consumes = {"application/json", "application/xml"},
+        produces = {"application/json", "application/xml"}
+
+
+)
 public class ClienteController {
 
-    @RequestMapping(value="/hello/{nome}", method = RequestMethod.GET)
+    @RequestMapping(value="/hello/{nome}")
     @ResponseBody
-    public String  helloCliente(@PathVariable("nome") String nomeCliente ){
+    public Clientes  helloCliente(@PathVariable("nome") String nomeCliente, @RequestBody Cliente Cliente){
         return String.format("Hello %s", nomeCliente);
     }
 
