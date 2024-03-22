@@ -3,24 +3,29 @@ package io.github.thiago.vendas.rest.controller;
 
 import io.github.thiago.vendas.domain.entity.Cliente;
 import io.github.thiago.vendas.domain.repository.Clientes;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
+
 @Controller
-@RequestMapping(
-   value =  {"/api/clientes",  "/api/hello"},
-        method = RequestMethod.GET,
-        consumes = {"application/json", "application/xml"},
-        produces = {"application/json", "application/xml"}
+public class ClienteController{
+ private Clientes clientes;
 
-
-)
-public class ClienteController {
-
-    @RequestMapping(value="/hello/{nome}")
+ public  ClienteController (Clientes clientes){
+  this.clientes = clientes;
+ }
+    @GetMapping("/api/clientes/{id}")
     @ResponseBody
-    public Clientes  helloCliente(@PathVariable("nome") String nomeCliente, @RequestBody Cliente Cliente){
-        return String.format("Hello %s", nomeCliente);
+    public ResponseEntity<Cliente>  getClientById (@PathVariable  Integer id){
+        Optional<Cliente> cliente =  clientes.findById(id);
+        if(cliente.isPresent()){
+            return  ResponseEntity.ok(cliente.get());
+        }
+         return  ResponseEntity.notFound().build();
     }
+
 
 }
