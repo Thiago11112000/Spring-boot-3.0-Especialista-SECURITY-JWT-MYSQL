@@ -5,4 +5,6 @@ import io.github.thiago.vendas.rest.dto.PedidoDTO;
 
 public interface PedidoService {
  Pedido salvar(PedidoDTO dto);
-}
+
+
+ }
