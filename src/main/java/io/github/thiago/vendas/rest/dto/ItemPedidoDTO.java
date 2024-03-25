@@ -1,10 +1,10 @@
 package io.github.thiago.vendas.rest.dto;
 
 
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 
 
 @NoArgsConstructor

@@ -16,7 +16,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -31,6 +30,7 @@ public class ItemPedido {
     @ManyToOne
     @JoinColumn(name="pedido_id")
     private Pedido pedido;
+
     @ManyToOne
     @JoinColumn(name = "produto_id")
     private Produto produto;
@@ -38,6 +38,4 @@ public class ItemPedido {
     @Column
     private Integer quantidade;
 
-    }
-
-
+}

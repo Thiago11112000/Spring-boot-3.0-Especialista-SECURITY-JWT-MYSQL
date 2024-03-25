@@ -14,11 +14,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/clientes")
 public class ClienteController{
- private Clientes clientes;
+    private Clientes clientes;
 
- public  ClienteController (Clientes clientes){
-  this.clientes = clientes;
- }
+    public  ClienteController (Clientes clientes){
+        this.clientes = clientes;
+    }
     @GetMapping("{id}")
     public Cliente  getClientById (@PathVariable  Integer id) {
         return clientes
@@ -39,13 +39,13 @@ public class ClienteController{
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete (@PathVariable Integer id){
 
-              clientes.findById(id)
-                      .map(cliente -> {
-                          clientes.delete(cliente);
-                          return cliente;
-                      })
-                      .orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                              "Cliente não encontrado"));
+        clientes.findById(id)
+                .map(cliente -> {
+                    clientes.delete(cliente);
+                    return cliente;
+                })
+                .orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Cliente não encontrado"));
     }
 
 
@@ -53,23 +53,23 @@ public class ClienteController{
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@PathVariable  Integer id, @RequestBody  Cliente cliente){
 
-         clientes.findById(id).map(clienteExistente -> {
-          cliente.setId(clienteExistente.getId());
-          clientes.save(cliente);
-          return  clienteExistente;
-     }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado"));
+        clientes.findById(id).map(clienteExistente -> {
+            cliente.setId(clienteExistente.getId());
+            clientes.save(cliente);
+            return  clienteExistente;
+        }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado"));
     }
 
     @GetMapping
     public List<Cliente> find(Cliente filtro){
         ExampleMatcher matcher =  ExampleMatcher
-                                    .matching()
-                                    .withIgnoreCase()
-                                    .withStringMatcher(
-                                    ExampleMatcher.StringMatcher.CONTAINING );
+                .matching()
+                .withIgnoreCase()
+                .withStringMatcher(
+                        ExampleMatcher.StringMatcher.CONTAINING );
 
         Example example  = Example.of(filtro, matcher);
         List<Cliente> lista = clientes.findAll(example);
         return  clientes.findAll(example);
     }
-    }
+}
