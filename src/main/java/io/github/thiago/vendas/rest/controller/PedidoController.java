@@ -2,6 +2,8 @@ package io.github.thiago.vendas.rest.controller;
 
 import io.github.thiago.vendas.domain.entity.ItemPedido;
 import io.github.thiago.vendas.domain.entity.Pedido;
+import io.github.thiago.vendas.domain.enums.StatusPedido;
+import io.github.thiago.vendas.rest.dto.AtualizacaoStatusPedidoDTO;
 import io.github.thiago.vendas.rest.dto.InformacaoItemPedidoDTO;
 import io.github.thiago.vendas.rest.dto.InformacoesPedidosDTO;
 import io.github.thiago.vendas.rest.dto.PedidoDTO;
@@ -42,6 +44,13 @@ public class PedidoController {
               .map(p -> converter(p)
               )
               .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Pedido não Encontrado"));
+    }
+    @PatchMapping("{id}")
+    @ResponseStatus(NO_CONTENT)
+    public void updateStatus(@PathVariable Integer id ,
+                             @RequestBody AtualizacaoStatusPedidoDTO dto){
+        String novoStatus = dto.getNovoStatus();
+        service.atualizaStatus(id, StatusPedido.valueOf(novoStatus));
     }
     private InformacoesPedidosDTO converter(Pedido  pedido){
       return  InformacoesPedidosDTO

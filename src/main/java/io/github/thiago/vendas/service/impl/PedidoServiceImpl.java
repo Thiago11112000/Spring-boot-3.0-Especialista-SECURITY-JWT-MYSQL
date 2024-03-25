@@ -11,6 +11,7 @@ import io.github.thiago.vendas.domain.repository.Clientes;
 import io.github.thiago.vendas.domain.repository.ItemsPedidos;
 import io.github.thiago.vendas.domain.repository.Pedidos;
 import io.github.thiago.vendas.domain.repository.Produtos;
+import io.github.thiago.vendas.exception.PedidoNaoEncontradoException;
 import io.github.thiago.vendas.exception.RegraNegocioException;
 import io.github.thiago.vendas.rest.dto.ItemPedidoDTO;
 import io.github.thiago.vendas.rest.dto.PedidoDTO;
@@ -58,6 +59,17 @@ public class PedidoServiceImpl implements PedidoService {
     @Override
     public Optional<Pedido> obterPedidoCompleto(Integer id) {
         return  repository.findByIdFetchItems(id);
+    }
+
+    @Override
+    @Transactional
+    public void atualizaStatus(Integer id, StatusPedido statusPedido) {
+        repository
+                .findById(id)
+                .map(pedido -> {
+                    pedido.setStatus(statusPedido);
+                    return repository.save(pedido);
+                }).orElseThrow( () -> new PedidoNaoEncontradoException());
     }
 
     private List<ItemPedido> converterItems(Pedido pedido, List<ItemPedidoDTO> items){
