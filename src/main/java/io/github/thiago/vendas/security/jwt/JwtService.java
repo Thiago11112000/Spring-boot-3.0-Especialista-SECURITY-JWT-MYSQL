@@ -1,5 +1,6 @@
-package io.github.thiago.vendas;
+package io.github.thiago.vendas.security.jwt;
 
+import io.github.thiago.vendas.VendasApplication;
 import io.github.thiago.vendas.domain.entity.Usuario;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
